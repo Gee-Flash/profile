@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faLink } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 const Profile = () => {
     const [trainees, setTrainees] = useState([]);
@@ -49,16 +50,16 @@ const Profile = () => {
                     <nav className="breadcrumb-nav">
                         <ul className="breadcrumb">
                             <li>
-                                <a href="/">Home</a>
+                                <Link href="/">Home</Link>
                             </li>
                             <li>/</li>
                             <li className="active">Profile</li>
                         </ul>
                     </nav>
                     <div className="down-arrow">
-                        <a href="#profile-section">
+                        <Link href="#profile-section">
                             <FontAwesomeIcon icon={faAngleDown} className="fa-solid fa-angle-down" />
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -76,10 +77,10 @@ const Profile = () => {
                                     <p>Skill: {trainee.skill}</p>
                                     <p>Batch: {trainee.batch}, December 2024</p>
                                     <p>URL:   
-                                        <a href={trainee.url} target="_blank">
+                                        <Link href={trainee.url} target="_blank">
                                              Portfolio URL Link
                                             <FontAwesomeIcon icon={faLink} className="fa-solid fa-link" />
-                                        </a>
+                                        </Link>
                                     </p>
                                     <p>Gender: {trainee.gender}</p>
                                 </div>

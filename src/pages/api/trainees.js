@@ -1,28 +1,74 @@
 import pool from '../../lib/db';
 
-export default async function handler(req, res) {
+export default function handler(req, res) {
   if (req.method === 'GET') {
-    const { limit = 15, offset = 0 } = req.query; 
+    const { limit = 15, offset = 0 } = req.query;
+  
+    const trainees = [
+      {
+        id: 1,
+        name: "John Doe",
+        skill: "Frontend Development",
+        batch: "2024",
+        url: "https://portfolio-johndoe.vercel.app",
+        gender: "Male",
+        image: "/images/profile1.jpg"
+      },
+      {
+        id: 2,
+        name: "Jane Smith",
+        skill: "Full Stack Development",
+        batch: "2024",
+        url: "https://portfolio-janesmith.vercel.app",
+        gender: "Female",
+        image: "/images/profile2.jpg"
+      },
+      {
+        id: 3,
+        name: "Alex Johnson",
+        skill: "Backend Development",
+        batch: "2024",
+        url: "https://portfolio-alexj.vercel.app",
+        gender: "Male",
+        image: "/images/profile3.jpg"
+      },
+      {
+        id: 4,
+        name: "Sarah Williams",
+        skill: "UI/UX Design",
+        batch: "2024",
+        url: "https://portfolio-sarahw.vercel.app",
+        gender: "Female",
+        image: "/images/profile4.jpg"
+      },
+      {
+        id: 5,
+        name: "Michael Brown",
+        skill: "DevOps",
+        batch: "2024",
+        url: "https://portfolio-michaelb.vercel.app",
+        gender: "Male",
+        image: "/images/profile5.jpg"
+      },
+      {
+        id: 6,
+        name: "Emily Davis",
+        skill: "Mobile Development",
+        batch: "2024",
+        url: "https://portfolio-emilyd.vercel.app",
+        gender: "Female",
+        image: "/images/profile6.jpg"
+      }
+    ];
 
-    try {
-      const dataQuery = 'SELECT * FROM trainees ORDER BY id ASC LIMIT $1 OFFSET $2;';
-      const countQuery = 'SELECT COUNT(*) FROM trainees;'; 
+    const startIndex = Number(offset);
+    const endIndex = startIndex + Number(limit);
+    const paginatedTrainees = trainees.slice(startIndex, endIndex);
 
-      const [dataResult, countResult] = await Promise.all([
-        pool.query(dataQuery, [parseInt(limit), parseInt(offset)]),
-        pool.query(countQuery),
-      ]);
-
-      const totalRows = parseInt(countResult.rows[0].count);
-
-      res.status(200).json({
-        trainees: dataResult.rows,
-        totalRows,
-      });
-    } catch (error) {
-      console.error('Error fetching trainees:', error);
-      res.status(500).json({ error: 'Failed to fetch trainees' });
-    }
+    res.status(200).json({
+      trainees: paginatedTrainees,
+      totalRows: trainees.length
+    });
   }
   else if (req.method === 'POST') {
     const { name, email, phone, image, gender, skill, batch, url } = req.body;

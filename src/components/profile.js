@@ -10,7 +10,7 @@ const Profile = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
-    const limit = 15; // Number of trainees per page
+    const limit = 15;
 
     const fetchTrainees = async (page) => {
         setLoading(true);
@@ -22,7 +22,7 @@ const Profile = () => {
 
             const data = await response.json();
             setTrainees(data.trainees);
-            setTotalPages(Math.ceil(data.totalRows / limit)); // Calculate total pages
+            setTotalPages(Math.ceil(data.totalRows / limit));
         } catch (error) {
             console.error(error);
         } finally {
@@ -31,7 +31,7 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        fetchTrainees(currentPage); // Fetch trainees for the current page
+        fetchTrainees(currentPage);
     }, [currentPage]);
 
     const handlePageClick = (page) => {
@@ -76,7 +76,7 @@ const Profile = () => {
                                     <div className="colorful-div" />
                                     <p>Skill: {trainee.skill}</p>
                                     <p>Batch: {trainee.batch}, December 2024</p>
-                                    <p>URL:   
+                                    <p>URL:  
                                         <Link href={trainee.url} target="_blank">
                                              Portfolio URL Link
                                             <FontAwesomeIcon icon={faLink} className="fa-solid fa-link" />
@@ -88,7 +88,6 @@ const Profile = () => {
                         ))}
                     </ul>
                 )}
-                {/* Pagination */}
                 <div className="pagination">
                     {Array.from({ length: totalPages }, (_, index) => (
                         <span

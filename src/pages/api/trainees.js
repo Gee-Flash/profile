@@ -1,6 +1,6 @@
 import pool from '../../lib/db';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === 'GET') {
     const { limit = 15, offset = 0 } = req.query;
   
@@ -90,8 +90,7 @@ export default function handler(req, res) {
       res.status(500).json({ error: 'Failed to add trainee' });
     }
   } else if (req.method === 'PATCH') {
-    // Handle PATCH request
-    const { id } = req.query; // Expecting the trainee ID as a query parameter
+    const { id } = req.query;
     const { name, email, phone, image, gender, skill, batch, url } = req.body;
 
     if (!id) {
@@ -125,8 +124,7 @@ export default function handler(req, res) {
       res.status(500).json({ error: 'Failed to update trainee' });
     }
   } else if (req.method === 'DELETE') {
-    // Handle DELETE request
-    const { id } = req.query; // Expecting the trainee ID as a query parameter
+    const { id } = req.query;
 
     if (!id) {
       return res.status(400).json({ error: 'Trainee ID is required' });
